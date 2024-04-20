@@ -7,7 +7,6 @@ import schedule
 import time
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage
-from langchain_core.prompts import ChatPromptTemplate
 
 load_dotenv()
 
@@ -92,7 +91,7 @@ class NotificationSystem:
                 }
                 requests.post(
                     self.whatsapp_url, headers=self.whatsapp_headers, json=data)
-                print('Tomorrow message sent successfully')
+                print('Tomorrow messages sent successfully')
 
                 self.supabase.table('Event').update(
                     {'status': 'Completed'}).eq('id', each_message['id']).execute()
@@ -122,9 +121,7 @@ class NotificationSystem:
             }
             requests.post(
                 self.whatsapp_url, headers=self.whatsapp_headers, json=data)
-            print('Yesterday message sent successfully')
-
-            exit()
+            print('Yesterday messages sent successfully')
 
 
 def job():
@@ -134,7 +131,7 @@ def job():
 
 
 if __name__ == '__main__':
-    schedule.every(1).minutes.do(job)
+    schedule.every(24).hours.do(job)
     while True:
         schedule.run_pending()
         time.sleep(10)
