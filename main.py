@@ -134,7 +134,7 @@ def job():
 
 
 if __name__ == '__main__':
-    schedule.every(24).hours.do(job)
+    schedule.every(1).minutes.do(job)
     while True:
         schedule.run_pending()
         time.sleep(10)
